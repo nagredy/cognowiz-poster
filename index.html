@@ -416,6 +416,7 @@ async function exchangeToken() {
     const res = await fetch(pipedreamUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      mode: "cors",
       body: JSON.stringify({
         action: "get_token",
         code,
@@ -424,7 +425,9 @@ async function exchangeToken() {
         redirect_uri: "https://oauth.pstmn.io/v1/callback"
       })
     });
-    const data = await res.json();
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch(e) { throw new Error("Non-JSON response: " + text.slice(0, 100)); }
     if (data.access_token) {
       accessToken = data.access_token;
       showStatus("auth-status", "Connected! Token valid for 2 months.", "success");
@@ -435,7 +438,7 @@ async function exchangeToken() {
       document.getElementById("post-card").style.opacity = "1";
       document.getElementById("post-card").style.pointerEvents = "auto";
     } else {
-      showStatus("auth-status", `Error: ${data.error || JSON.stringify(data)}`, "error");
+      showStatus("auth-status", `LinkedIn error: ${data.error_description || data.error || JSON.stringify(data)}`, "error");
     }
   } catch (e) {
     showStatus("auth-status", `Request failed: ${e.message}`, "error");
