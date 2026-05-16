@@ -463,9 +463,10 @@ ${topic ? `Topic: ${topic}` : "Choose a compelling relevant topic."}
 Requirements: scroll-stopping opener (no 'excited to' or 'thrilled'), short paragraphs, 3–5 hashtags at end, 150–280 words, authentic tone, end with question or CTA. Output ONLY the post text.`;
 
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch(pipedreamUrl, {
       method: "POST",
-headers: { "Content-Type": "application/json", "x-api-key": "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", "anthropic-version": "2023-06-01" },      body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, messages: [{ role: "user", content: prompt }] })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "generate", prompt })
     });
     const data = await res.json();
     const text = data.content?.find(b => b.type === "text")?.text || "Error generating post.";
