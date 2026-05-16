@@ -263,8 +263,8 @@
     </div>
 
     <div class="field">
-      <label>Pipedream Webhook URL</label>
-      <input type="text" id="pipedream-url" value="https://eoghut7rjl8zngy.m.pipedream.net" />
+      <label>Backend URL</label>
+      <input type="text" id="pipedream-url" value="https://linkedinpost.nagredy.workers.dev" />
     </div>
 
     <div class="btn-row">
@@ -408,7 +408,7 @@ async function exchangeToken() {
 
   if (!code) { showStatus("auth-status", "Could not find code in URL.", "error"); return; }
   if (!clientSecret) { showStatus("auth-status", "Enter your client secret.", "error"); return; }
-  if (!pipedreamUrl) { showStatus("auth-status", "Enter your Pipedream webhook URL.", "error"); return; }
+  if (!pipedreamUrl) { showStatus("auth-status", "Enter your backend URL.", "error"); return; }
 
   showStatus("auth-status", "Exchanging code for token via Pipedream...", "info");
 
