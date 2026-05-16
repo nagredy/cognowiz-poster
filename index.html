@@ -7,237 +7,58 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --blue: #0077B5;
-    --blue-dark: #005f8e;
-    --bg: #f4f6f8;
-    --card: #ffffff;
-    --border: #e2e8f0;
-    --text: #0f172a;
-    --muted: #64748b;
-    --success: #16a34a;
-    --error: #dc2626;
-    --accent: #e8f4fb;
+    --blue: #0077B5; --blue-dark: #005f8e; --bg: #f4f6f8; --card: #ffffff;
+    --border: #e2e8f0; --text: #0f172a; --muted: #64748b;
+    --success-bg: #dcfce7; --success-text: #166534;
+    --error-bg: #fee2e2; --error-text: #991b1b;
+    --info-bg: #e8f4fb; --info-text: #005f8e;
   }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 2rem 1rem;
-  }
-
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1rem; }
   .container { max-width: 680px; margin: 0 auto; }
-
-  header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 2rem;
-  }
-
-  .logo {
-    width: 48px; height: 48px;
-    background: var(--blue);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'DM Mono', monospace;
-    font-weight: 500;
-    color: white;
-    font-size: 16px;
-    letter-spacing: -0.5px;
-    flex-shrink: 0;
-  }
-
-  header h1 { font-size: 18px; font-weight: 600; line-height: 1.2; }
+  header { display: flex; align-items: center; gap: 14px; margin-bottom: 2rem; }
+  .logo { width: 48px; height: 48px; background: var(--blue); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-weight: 500; color: white; font-size: 16px; flex-shrink: 0; }
+  header h1 { font-size: 18px; font-weight: 600; }
   header p { font-size: 13px; color: var(--muted); margin-top: 2px; }
-
-  .badge {
-    margin-left: auto;
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: #fef3c7;
-    color: #92400e;
-    font-weight: 500;
-    flex-shrink: 0;
-  }
-  .badge.connected { background: #dcfce7; color: #166534; }
-
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .card-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .step-num {
-    width: 20px; height: 20px;
-    background: var(--blue);
-    color: white;
-    border-radius: 50%;
-    font-size: 11px;
-    font-weight: 600;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-
+  .badge { margin-left: auto; font-size: 11px; padding: 4px 10px; border-radius: 999px; background: #fef3c7; color: #92400e; font-weight: 500; flex-shrink: 0; }
+  .badge.connected { background: var(--success-bg); color: var(--success-text); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+  .step-num { width: 20px; height: 20px; background: var(--blue); color: white; border-radius: 50%; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 5px; }
-
-  input, select, textarea {
-    width: 100%;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    padding: 9px 12px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--bg);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-
+  input, select, textarea { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); outline: none; transition: border-color 0.15s; }
   input:focus, select:focus, textarea:focus { border-color: var(--blue); }
   textarea { resize: vertical; line-height: 1.6; }
-
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-
-  @media (max-width: 520px) {
-    .grid-2 { grid-template-columns: 1fr; }
-    .grid-3 { grid-template-columns: 1fr 1fr; }
-  }
-
+  @media (max-width: 520px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
   .field { margin-bottom: 12px; }
   .field:last-child { margin-bottom: 0; }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    transition: all 0.15s;
-  }
-
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; transition: all 0.15s; }
   .btn-primary { background: var(--blue); color: white; }
   .btn-primary:hover { background: var(--blue-dark); }
   .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-  .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
-  .btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+  .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); font-size: 12px; padding: 4px 12px; }
   .btn-full { width: 100%; justify-content: center; padding: 12px; font-size: 15px; }
-
   .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-
-  .status {
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    margin-top: 10px;
-    display: none;
-  }
-  .status.success { background: #dcfce7; color: #166534; }
-  .status.error { background: #fee2e2; color: #991b1b; }
-  .status.info { background: var(--accent); color: var(--blue-dark); }
-
-  .post-box {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    margin-top: 1rem;
-  }
-
-  .post-box-header {
-    padding: 10px 14px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 500;
-  }
-
-  .post-box textarea {
-    border: none;
-    border-radius: 0;
-    background: white;
-    padding: 14px;
-    min-height: 200px;
-  }
-
-  .meta-pills {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 10px;
-  }
-
-  .pill {
-    font-size: 12px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: var(--accent);
-    color: var(--blue-dark);
-    font-family: 'DM Mono', monospace;
-  }
-
+  .status { padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-top: 10px; display: none; }
+  .status.success { background: var(--success-bg); color: var(--success-text); }
+  .status.error { background: var(--error-bg); color: var(--error-text); }
+  .status.info { background: var(--info-bg); color: var(--info-text); }
+  .post-box { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 1rem; }
+  .post-box-header { padding: 10px 14px; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--muted); font-weight: 500; }
+  .meta-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .pill { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: var(--info-bg); color: var(--info-text); font-family: 'DM Mono', monospace; }
   .loading { display: none; text-align: center; padding: 2rem; color: var(--muted); font-size: 14px; }
   .loading.active { display: block; }
-
-  .spinner {
-    width: 24px; height: 24px;
-    border: 2px solid var(--border);
-    border-top-color: var(--blue);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    margin: 0 auto 10px;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .auth-url {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    padding: 10px 12px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    word-break: break-all;
-    color: var(--muted);
-    margin-top: 8px;
-    line-height: 1.6;
-  }
-
+  .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 10px; }
+  .auth-url { font-family: 'DM Mono', monospace; font-size: 11px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; word-break: break-all; color: var(--muted); margin-top: 8px; line-height: 1.6; }
   .divider { height: 1px; background: var(--border); margin: 1rem 0; }
-
   footer { text-align: center; font-size: 12px; color: var(--muted); margin-top: 2rem; padding-bottom: 1rem; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 <div class="container">
-
   <header>
     <div class="logo">CW</div>
     <div>
@@ -247,40 +68,23 @@
     <span class="badge" id="conn-badge">Not connected</span>
   </header>
 
-  <!-- Step 1: Auth -->
   <div class="card" id="auth-card">
     <div class="card-title"><span class="step-num">1</span> Connect LinkedIn</div>
-
-    <div class="grid-2">
-      <div class="field">
-        <label>Client ID</label>
-        <input type="text" id="client-id" value="867mx7mad9csdj" />
-      </div>
-      <div class="field">
-        <label>Client Secret</label>
-        <input type="password" id="client-secret" placeholder="Paste new secret..." />
-      </div>
-    </div>
-
     <div class="field">
-      <label>Backend URL</label>
-      <input type="text" id="pipedream-url" value="https://linkedinpost.nagredy.workers.dev" />
+      <label>Client Secret</label>
+      <input type="password" id="client-secret" placeholder="Paste your LinkedIn client secret..." />
     </div>
-
     <div class="btn-row">
       <button class="btn btn-primary" onclick="buildAuthUrl()">Generate auth URL</button>
     </div>
-
     <div id="auth-url-display" style="display:none;">
-      <p style="font-size:13px;color:var(--muted);margin-top:12px;margin-bottom:4px;">Open this URL in your browser → log in → approve → copy the redirect URL:</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;margin-bottom:4px;">Open this URL → log in → approve → copy the redirect URL:</p>
       <div class="auth-url" id="auth-url-text"></div>
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="copyAuthUrl()">Copy URL</button>
       </div>
     </div>
-
     <div class="divider"></div>
-
     <div class="field">
       <label>Paste the full redirect URL after approving</label>
       <input type="text" id="callback-url" placeholder="https://oauth.pstmn.io/v1/callback?code=..." />
@@ -289,10 +93,8 @@
     <div class="status" id="auth-status"></div>
   </div>
 
-  <!-- Step 2: Generate -->
   <div class="card" id="generate-card" style="opacity:0.5;pointer-events:none;">
     <div class="card-title"><span class="step-num">2</span> Generate post</div>
-
     <div class="grid-3">
       <div class="field">
         <label>Service</label>
@@ -324,23 +126,19 @@
         </select>
       </div>
     </div>
-
     <div class="field">
       <label>Topic / context (optional)</label>
       <textarea id="topic" rows="2" placeholder="e.g. Ranked #70 Inc. Regionals · Hiring Data Engineer · New analytics client..."></textarea>
     </div>
-
     <button class="btn btn-primary" onclick="generatePost()">✦ Generate post</button>
-
     <div class="loading" id="gen-loading"><div class="spinner"></div>Writing your post...</div>
-
     <div id="post-output" style="display:none;">
       <div class="post-box">
         <div class="post-box-header">
           Review & edit before posting
           <div style="display:flex;gap:6px;">
-            <button class="btn btn-secondary" style="padding:4px 10px;font-size:12px;" onclick="copyPost()">Copy</button>
-            <button class="btn btn-secondary" style="padding:4px 10px;font-size:12px;" onclick="generatePost()">Regenerate</button>
+            <button class="btn btn-secondary" onclick="copyPost()">Copy</button>
+            <button class="btn btn-secondary" onclick="generatePost()">Regenerate</button>
           </div>
         </div>
         <textarea id="post-text" rows="10" style="border:none;border-radius:0;background:white;padding:14px;" oninput="updateMeta()"></textarea>
@@ -353,21 +151,25 @@
     </div>
   </div>
 
-  <!-- Step 3: Post -->
   <div class="card" id="post-card" style="opacity:0.5;pointer-events:none;">
     <div class="card-title"><span class="step-num">3</span> Approve & publish</div>
-    <button class="btn btn-primary btn-full" id="post-btn" onclick="publishPost()">
-      ↑ Post to LinkedIn
-    </button>
+    <button class="btn btn-primary btn-full" id="post-btn" onclick="publishPost()">↑ Post to LinkedIn</button>
     <div class="status" id="post-status"></div>
   </div>
 
-  <footer>CognoWiz LinkedIn Auto-Poster · Session only — no data stored</footer>
+  <footer>CognoWiz LinkedIn Auto-Poster · Token saved for 2 months</footer>
 </div>
 
 <script>
-let accessToken = localStorage.getItem("cw_token") || "";
-let pipedreamUrl = localStorage.getItem("cw_worker") || "https://linkedinpost.nagredy.workers.dev";
+const WORKER = "https://linkedinpost.nagredy.workers.dev";
+const CLIENT_ID = "867mx7mad9csdj";
+
+const postTimes = {
+  thought_leadership: "Tue–Thu, 8–9 AM", company_news: "Mon–Tue, 9–10 AM",
+  hiring: "Mon 8 AM or Fri 4 PM", client_win: "Wed–Thu, 10 AM–12 PM",
+  industry_insight: "Tue–Thu, 8–10 AM", team_spotlight: "Mon or Fri, 9–11 AM",
+  engagement_hook: "Wed–Thu, 12–1 PM"
+};
 
 const serviceCtx = {
   both: "CognoWiz is a US-based technology services firm (Herndon/Ashburn VA, Mohali, Noida). They provide IT Staffing — placing Observability Engineers, AI trainers, Data Engineers, cloud architects with healthcare IT, enterprise, and government clients — and Data Analytics consulting to clients across the USA. Ranked #70 on 2026 Inc. Regionals Mid-Atlantic list, 5th consecutive year. Audience: CTOs, CDOs, VPs Engineering, HR directors, hiring managers.",
@@ -375,20 +177,26 @@ const serviceCtx = {
   analytics: "CognoWiz is a US-based technology services firm offering Data Analytics consulting — analytics engineering, BI, data strategy — to clients across the USA. Ranked #70 on 2026 Inc. Regionals Mid-Atlantic, 5th year. Audience: CDOs, VPs of Data, analytics leaders, data-driven executives."
 };
 
-const postTimes = {
-  thought_leadership: "Tue–Thu, 8–9 AM",
-  company_news: "Mon–Tue, 9–10 AM",
-  hiring: "Mon 8 AM or Fri 4 PM",
-  client_win: "Wed–Thu, 10 AM–12 PM",
-  industry_insight: "Tue–Thu, 8–10 AM",
-  team_spotlight: "Mon or Fri, 9–11 AM",
-  engagement_hook: "Wed–Thu, 12–1 PM"
-};
+let accessToken = localStorage.getItem("cw_token") || "";
+
+window.addEventListener("DOMContentLoaded", () => {
+  if (accessToken) {
+    setConnected();
+    showStatus("auth-status", "Token restored — you're connected.", "success");
+  }
+});
+
+function setConnected() {
+  document.getElementById("conn-badge").textContent = "Connected";
+  document.getElementById("conn-badge").classList.add("connected");
+  document.getElementById("generate-card").style.opacity = "1";
+  document.getElementById("generate-card").style.pointerEvents = "auto";
+  document.getElementById("post-card").style.opacity = "1";
+  document.getElementById("post-card").style.pointerEvents = "auto";
+}
 
 function buildAuthUrl() {
-  const clientId = document.getElementById("client-id").value.trim();
-  if (!clientId) { alert("Enter Client ID first."); return; }
-  const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&scope=openid%20profile%20w_member_social&redirect_uri=https%3A%2F%2Foauth.pstmn.io%2Fv1%2Fcallback&state=cw123`;
+  const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${CLIENT_ID}&scope=openid%20profile%20w_member_social&redirect_uri=https%3A%2F%2Foauth.pstmn.io%2Fv1%2Fcallback&state=cw123`;
   document.getElementById("auth-url-text").textContent = url;
   document.getElementById("auth-url-display").style.display = "block";
 }
@@ -399,49 +207,29 @@ function copyAuthUrl() {
 
 async function exchangeToken() {
   const callbackUrl = document.getElementById("callback-url").value.trim();
-  const clientId = document.getElementById("client-id").value.trim();
   const clientSecret = document.getElementById("client-secret").value.trim();
-  pipedreamUrl = document.getElementById("pipedream-url").value.trim();
-
   const params = new URLSearchParams(callbackUrl.split("?")[1]);
   const code = params.get("code");
-
   if (!code) { showStatus("auth-status", "Could not find code in URL.", "error"); return; }
   if (!clientSecret) { showStatus("auth-status", "Enter your client secret.", "error"); return; }
-  if (!pipedreamUrl) { showStatus("auth-status", "Enter your backend URL.", "error"); return; }
-
-  showStatus("auth-status", "Exchanging code for token via Pipedream...", "info");
-
+  showStatus("auth-status", "Getting access token...", "info");
   try {
-    const res = await fetch(pipedreamUrl, {
+    const res = await fetch(WORKER, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      mode: "cors",
-      body: JSON.stringify({
-        action: "get_token",
-        code,
-        client_id: clientId,
-        client_secret: clientSecret,
-        redirect_uri: "https://oauth.pstmn.io/v1/callback"
-      })
+      body: JSON.stringify({ action: "get_token", code, client_id: CLIENT_ID, client_secret: clientSecret, redirect_uri: "https://oauth.pstmn.io/v1/callback" })
     });
-    const text = await res.text();
-    let data;
-    try { data = JSON.parse(text); } catch(e) { throw new Error("Non-JSON response: " + text.slice(0, 100)); }
+    const data = await res.json();
     if (data.access_token) {
-      accessToken = data.access_token; localStorage.setItem("cw_token", accessToken); localStorage.setItem("cw_worker", pipedreamUrl);
-      showStatus("auth-status", "Connected! Token valid for 2 months.", "success");
-      document.getElementById("conn-badge").textContent = "Connected";
-      document.getElementById("conn-badge").classList.add("connected");
-      document.getElementById("generate-card").style.opacity = "1";
-      document.getElementById("generate-card").style.pointerEvents = "auto";
-      document.getElementById("post-card").style.opacity = "1";
-      document.getElementById("post-card").style.pointerEvents = "auto";
+      accessToken = data.access_token;
+      localStorage.setItem("cw_token", accessToken);
+      showStatus("auth-status", "Connected! Token saved for 2 months.", "success");
+      setConnected();
     } else {
       showStatus("auth-status", `LinkedIn error: ${data.error_description || data.error || JSON.stringify(data)}`, "error");
     }
   } catch (e) {
-    showStatus("auth-status", `Request failed: ${e.message}`, "error");
+    showStatus("auth-status", `Failed: ${e.message}`, "error");
   }
 }
 
@@ -451,25 +239,17 @@ async function generatePost() {
   const postTypeLabel = document.getElementById("post-type").options[document.getElementById("post-type").selectedIndex].text;
   const toneLabel = document.getElementById("tone").options[document.getElementById("tone").selectedIndex].text;
   const topic = document.getElementById("topic").value.trim();
-
   document.getElementById("post-output").style.display = "none";
   document.getElementById("gen-loading").classList.add("active");
-
-  const prompt = `You are an expert LinkedIn content strategist. Write a high-performing LinkedIn post for CognoWiz.
-Company: ${serviceCtx[service]}
-Post type: ${postTypeLabel}
-Tone: ${toneLabel}
-${topic ? `Topic: ${topic}` : "Choose a compelling relevant topic."}
-Requirements: scroll-stopping opener (no 'excited to' or 'thrilled'), short paragraphs, 3–5 hashtags at end, 150–280 words, authentic tone, end with question or CTA. Output ONLY the post text.`;
-
+  const prompt = `You are an expert LinkedIn content strategist. Write a high-performing LinkedIn post for CognoWiz.\nCompany: ${serviceCtx[service]}\nPost type: ${postTypeLabel}\nTone: ${toneLabel}\n${topic ? `Topic: ${topic}` : "Choose a compelling relevant topic."}\nRequirements: scroll-stopping opener (no 'excited to' or 'thrilled'), short paragraphs, 3-5 hashtags at end, 150-280 words, authentic tone, end with question or CTA. Output ONLY the post text.`;
   try {
-    const res = await fetch(pipedreamUrl, {
+    const res = await fetch(WORKER, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "generate", prompt })
     });
     const data = await res.json();
-    const text = data.content?.find(b => b.type === "text")?.text || "Error generating post.";
+    const text = data.content?.[0]?.text || data.error || "Error generating post.";
     document.getElementById("post-text").value = text;
     document.getElementById("gen-loading").classList.remove("active");
     document.getElementById("post-output").style.display = "block";
@@ -477,7 +257,8 @@ Requirements: scroll-stopping opener (no 'excited to' or 'thrilled'), short para
     updateMeta();
   } catch (e) {
     document.getElementById("gen-loading").classList.remove("active");
-    alert("Generation failed. Check your connection.");
+    document.getElementById("post-text").value = "Error: " + e.message;
+    document.getElementById("post-output").style.display = "block";
   }
 }
 
@@ -488,21 +269,17 @@ function updateMeta() {
   document.getElementById("meta-tags").textContent = (tags ? tags.length : 0) + " hashtags";
 }
 
-function copyPost() {
-  navigator.clipboard.writeText(document.getElementById("post-text").value);
-}
+function copyPost() { navigator.clipboard.writeText(document.getElementById("post-text").value); }
 
 async function publishPost() {
   const postText = document.getElementById("post-text").value.trim();
-  if (!postText) { showStatus("post-status", "Generate a post first.", "error"); return; }
+  if (!postText || postText === "Error generating post.") { showStatus("post-status", "Generate a post first.", "error"); return; }
   if (!accessToken) { showStatus("post-status", "Connect LinkedIn first.", "error"); return; }
-
   const btn = document.getElementById("post-btn");
   btn.disabled = true;
   btn.textContent = "Posting...";
-
   try {
-    const res = await fetch(pipedreamUrl, {
+    const res = await fetch(WORKER, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "post", access_token: accessToken, text: postText })
@@ -512,7 +289,7 @@ async function publishPost() {
       showStatus("post-status", "Posted successfully to LinkedIn!", "success");
       btn.textContent = "✓ Posted!";
     } else {
-      showStatus("post-status", `Error: ${data.error || JSON.stringify(data)}`, "error");
+      showStatus("post-status", `Error: ${data.message || data.error || JSON.stringify(data)}`, "error");
       btn.disabled = false;
       btn.textContent = "↑ Post to LinkedIn";
     }
@@ -522,8 +299,6 @@ async function publishPost() {
     btn.textContent = "↑ Post to LinkedIn";
   }
 }
-
-window.addEventListener("DOMContentLoaded", () => { if (accessToken) { document.getElementById("conn-badge").textContent = "Connected"; document.getElementById("conn-badge").classList.add("connected"); document.getElementById("generate-card").style.opacity = "1"; document.getElementById("generate-card").style.pointerEvents = "auto"; document.getElementById("post-card").style.opacity = "1"; document.getElementById("post-card").style.pointerEvents = "auto"; } if (pipedreamUrl) { document.getElementById("pipedream-url").value = pipedreamUrl; } });
 
 function showStatus(id, msg, type) {
   const el = document.getElementById(id);
