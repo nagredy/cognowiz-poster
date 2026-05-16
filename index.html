@@ -366,8 +366,8 @@
 </div>
 
 <script>
-let accessToken = "";
-let pipedreamUrl = "";
+let accessToken = localStorage.getItem("cw_token") || "";
+let pipedreamUrl = localStorage.getItem("cw_worker") || "https://linkedinpost.nagredy.workers.dev";
 
 const serviceCtx = {
   both: "CognoWiz is a US-based technology services firm (Herndon/Ashburn VA, Mohali, Noida). They provide IT Staffing — placing Observability Engineers, AI trainers, Data Engineers, cloud architects with healthcare IT, enterprise, and government clients — and Data Analytics consulting to clients across the USA. Ranked #70 on 2026 Inc. Regionals Mid-Atlantic list, 5th consecutive year. Audience: CTOs, CDOs, VPs Engineering, HR directors, hiring managers.",
@@ -429,7 +429,7 @@ async function exchangeToken() {
     let data;
     try { data = JSON.parse(text); } catch(e) { throw new Error("Non-JSON response: " + text.slice(0, 100)); }
     if (data.access_token) {
-      accessToken = data.access_token;
+      accessToken = data.access_token; localStorage.setItem("cw_token", accessToken); localStorage.setItem("cw_worker", pipedreamUrl);
       showStatus("auth-status", "Connected! Token valid for 2 months.", "success");
       document.getElementById("conn-badge").textContent = "Connected";
       document.getElementById("conn-badge").classList.add("connected");
@@ -465,7 +465,7 @@ Requirements: scroll-stopping opener (no 'excited to' or 'thrilled'), short para
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "x-api-key": "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", "anthropic-version": "2023-06-01" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, messages: [{ role: "user", content: prompt }] })
     });
     const data = await res.json();
@@ -522,6 +522,8 @@ async function publishPost() {
     btn.textContent = "↑ Post to LinkedIn";
   }
 }
+
+window.addEventListener("DOMContentLoaded", () => { if (accessToken) { document.getElementById("conn-badge").textContent = "Connected"; document.getElementById("conn-badge").classList.add("connected"); document.getElementById("generate-card").style.opacity = "1"; document.getElementById("generate-card").style.pointerEvents = "auto"; document.getElementById("post-card").style.opacity = "1"; document.getElementById("post-card").style.pointerEvents = "auto"; } if (pipedreamUrl) { document.getElementById("pipedream-url").value = pipedreamUrl; } });
 
 function showStatus(id, msg, type) {
   const el = document.getElementById(id);
